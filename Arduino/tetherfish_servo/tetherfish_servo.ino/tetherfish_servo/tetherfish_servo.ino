@@ -71,6 +71,8 @@ int stepdelay = 3000; //in microseconds
 unsigned long laststeptime2 = 0;
 int stepdelay2 = 600000;
 
+int switchPin = 11;
+
 unsigned long timestampMicros;
 
 void setup() {
@@ -90,6 +92,10 @@ void setup() {
 }
 
 void loop() {
+  
+  while(!digitalRead(switchPin)){
+    delay(100);
+  }
 
   timestamp = millis();
   timestampMicros = micros();
