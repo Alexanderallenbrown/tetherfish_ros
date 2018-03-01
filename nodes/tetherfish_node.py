@@ -2,7 +2,7 @@
 
 import roslib; roslib.load_manifest('tetherfish_ros')
 import rospy
-from fish_target.msg import TargetMsg
+from tetherfish_ros.msg import TetherFishMsg
 import tf
 import serial
 import sys
@@ -25,14 +25,14 @@ class ArduinoTarget():
       #construct the file name for our text output file
       rospack = rospkg.RosPack()
       # get the file path for rospy_tutorials
-      self.package_path=rospack.get_path('tetherfish')
+      self.package_path=rospack.get_path('tetherfish_ros')
 
    def loop(self,event):
       line = self.ser.readline()
-      #print line
+      print line
       linestrip = line.strip('\r\n')
       linesplit = line.split()
-      if len(linesplit)>=6:
+      if len(linesplit)>=3:
         #print shotslast, arduinonumshots,shotslast==(arduinonumshots+1)
         
         try:
@@ -42,9 +42,10 @@ class ArduinoTarget():
             msg.robotpos = float(linesplit[0])
             msg.robotangle = float(linesplit[1])
             msg.arduino_time = float(linesplit[2])
-            msg.tailfreq= float(linesplit[3])
-            msg.tailamp = float(linesplit[4])
-            msg.tailangle = float(linesplit[5])
+            #msg.tailfreq= float(linesplit[3])
+            #msg.tailamp = float(linesplit[4])
+            #msg.tailangle = float(linesplit[5])
+            print "publishing"
             self.pub.publish(msg)
             
 
